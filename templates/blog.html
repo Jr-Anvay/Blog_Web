@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>{{ post.title }}</h1>
+    </header>
+    <div class="container">
+        <div class="blog-post">
+            <p class="meta">
+                By {{ post.author }} | {{ post.date }}
+            </p>
+            <p>{{ post.content }}</p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 My Blog | <a href="#">Contact</a></p>
+    </footer>
+</body>
+</html>
