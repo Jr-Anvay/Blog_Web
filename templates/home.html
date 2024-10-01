@@ -1,32 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <header>
-        <h1>Welcome to My Blog</h1>
-    </header>
-    <div class="container">
-        <div class="blog-list">
-            {% for blog in blogs %}
-            <div class="blog-item">
-                <h2>{{ blog.title }}</h2>
-                <p class="meta">
-                    By {{ blog.author }} | {{ blog.date }}
-                </p>
-                <p>{{ blog.content[:100] }}...</p>
-                <a href="/blog/{{ loop.index0 }}">Read More</a>
-            </div>
-            {% endfor %}
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Latest Blogs</h2>
+    <div class="blog-list">
+        {% for blog in blogs %}
+        <div class="blog-item">
+            <h3><a href="/blog/{{ loop.index0 }}">{{ blog.title }}</a></h3>
+            <p class="meta">By {{ blog.author }} on {{ blog.date }}</p>
+            <p>{{ blog.content[:200] }}...</p>
+            <!-- Summarize Button -->
+            <button class="summarize-btn" data-blog-id="{{ loop.index0 }}">Summarize</button>
+            <div class="summary" id="summary-{{ loop.index0 }}"></div>
         </div>
+        {% endfor %}
     </div>
-    <footer>
-        <p>&copy; 2024 My Blog | <a href="#">Contact</a></p>
-    </footer>
-</body>
-</html>
+</div>
+
+<!-- Include jQuery for simplicity -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.summarize-btn').click(function(){
+            var blogId = $(this).data('blog-id');
+            var summaryDiv = $('#summary-' + blogId);
+
+            // Send an AJAX POST request to the '/summarize' route
+            $.ajax({
+                url: '/summarize',
+                type: 'POST',
+                data: { 'blog_id': blogId },
+                success: function(response) {
+                    if (response.summary) {
+                        summaryDiv.html('<h4>Summary:</h4><p>' + response.summary + '</p>');
+                    } else if (response.error) {
+                        summaryDiv.html('<p style="color:red;">Error: ' + response.error + '</p>');
+                    }
+                },
+                error: function() {
+                    summaryDiv.html('<p style="color:red;">An error occurred while summarizing.</p>');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
