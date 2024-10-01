@@ -21,10 +21,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Header Styling */
 header {
-    background-color: #333;
+    background-color: rgb(217, 217, 217);
     color: #fff;
-    padding: 10px 0;
+    padding: 5px 0;
     text-align: center;
+    border-bottom: 1px solid #999;  /* Slight bottom border for subtle distinction */
+    width: 90%; /* Adjusted width for a narrow appearance */
+    margin: 0 auto;
 }
 
 header h1 {
@@ -106,6 +109,7 @@ nav a:hover {
 
 .blog-post p {
     margin-bottom: 20px;
+    text-align: justify; /* Text alignment for better readability */
 }
 
 .blog-post .meta {
@@ -129,8 +133,11 @@ footer {
     background-color: #333;
     color: #fff;
     text-align: center;
-    padding: 10px 0;
+    padding: 5px 0;
     margin-top: 50px;
+    border-top: 1px solid #999;  /* Subtle border for a refined look */
+    width: 90%; /* Adjusted width for a narrow footer */
+    margin: 0 auto;
 }
 
 footer p {
@@ -161,3 +168,23 @@ footer a:hover {
         font-size: 2rem;
     }
 }
+
+/* Background for the homepage */
+.home-background {
+    background-image: url('/static/images/home-background.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Background for the blog page */
+.blog-background {
+    background-image: url('/static/images/blog-background.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+
