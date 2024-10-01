@@ -1,25 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <header>
-        <h1>{{ post.title }}</h1>
-    </header>
-    <div class="container">
-        <div class="blog-post">
-            <p class="meta">
-                By {{ post.author }} | {{ post.date }}
-            </p>
-            <p>{{ post.content }}</p>
-        </div>
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="blog-post">
+        <h2>{{ post.title }}</h2>
+        <p class="meta">By {{ post.author }} on {{ post.date }}</p>
+        <p>{{ post.content }}</p>
+        <!-- Summarize Button -->
+        <button id="summarize-btn" data-blog-id="{{ request.path.split('/')[-1] }}">Summarize</button>
+        <div class="summary" id="summary"></div>
     </div>
-    <footer>
-        <p>&copy; 2024 My Blog | <a href="#">Contact</a></p>
-    </footer>
-</body>
-</html>
+</div>
+
+<!-- Include jQuery for simplicity -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#summarize-btn').click(function(){
+            var blogId = $(this).data('blog-id');
+            var summaryDiv = $('#summary');
+
+            // Send an AJAX POST request to the '/summarize' route
+            $.ajax({
+                url: '/summarize',
+                type: 'POST',
+                data: { 'blog_id': blogId },
+                success: function(response) {
+                    if (response.summary) {
+                        summaryDiv.html('<h4>Summary:</h4><p>' + response.summary + '</p>');
+                    } else if (response.error) {
+                        summaryDiv.html('<p style="color:red;">Error: ' + response.error + '</p>');
+                    }
+                },
+                error: function() {
+                    summaryDiv.html('<p style="color:red;">An error occurred while summarizing.</p>');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
