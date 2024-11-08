@@ -26,7 +26,7 @@ header {
     padding: 5px 0;
     text-align: center;
     border-bottom: 1px solid #999;  /* Slight bottom border for subtle distinction */
-    width: 90%; /* Adjusted width for a narrow appearance */
+    width: 100%; /* Adjusted width for a narrow appearance */
     margin: 0 auto;
 }
 
@@ -136,7 +136,7 @@ footer {
     padding: 5px 0;
     margin-top: 50px;
     border-top: 1px solid #999;  /* Subtle border for a refined look */
-    width: 90%; /* Adjusted width for a narrow footer */
+    width: 100%; /* Adjusted width for a narrow footer */
     margin: 0 auto;
 }
 
